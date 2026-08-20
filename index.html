@@ -149,11 +149,12 @@
     .fq-options { display: grid; grid-template-columns: 1fr; gap: 10px; max-width: 520px; }
     .fq-textarea {
       font-family: var(--sans); font-size: 20px; color: var(--text);
-      width: 100%; min-height: 110px; resize: vertical; line-height: 1.6;
-      padding: 6px 0 10px; background: transparent;
+      width: 100%; line-height: 1.5;
+      padding: 6px 0 9px; background: transparent;
       border: none; border-bottom: 1px solid var(--border-light);
       border-radius: 0;
       outline: none;
+      appearance: none; -webkit-appearance: none;
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
     .fq-textarea::placeholder { color: var(--text-faint); }
@@ -467,7 +468,7 @@
             <div class="fq-step" data-q="offer">
               <h3 class="fq-title">Describe your current offer</h3>
               <p class="fq-sub">Who do you serve, how do you help them, and what's your price point?</p>
-              <textarea id="f-offer" class="fq-textarea" rows="5" placeholder=""></textarea>
+              <input type="text" id="f-offer" class="fq-textarea" placeholder="">
             </div>
 
             <div class="fq-step" data-q="contact">
@@ -608,7 +609,7 @@
       niche: 'Choose as many as you like, then hit Next',
       bottleneck: 'Pick one',
       revenue: 'Pick one',
-      offer: 'A few lines are enough, then hit Next',
+      offer: 'One line is enough, then hit Next',
       contact: 'Fill in your details to finish'
     };
 
@@ -666,13 +667,13 @@
 
     fqBack.addEventListener('click', () => goTo(Math.max(0, cur - 1)));
 
-    // Enter advances (Typeform behavior); inside the textarea Enter makes a newline
+    // Enter advances (Typeform behavior); on the contact step it submits natively
     document.addEventListener('keydown', e => {
       if (e.key !== 'Enter') return;
       const q = steps[cur].dataset.q;
       if (q === 'contact') return;
-      if (q === 'offer' && !(e.metaKey || e.ctrlKey)) return;
-      if (stepValid(cur)) { e.preventDefault(); fqNext.click(); }
+      e.preventDefault(); // stop the browser's implicit form submit mid-questionnaire
+      if (stepValid(cur)) fqNext.click();
     });
 
     document.getElementById('applyForm').addEventListener('submit', e => {
