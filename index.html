@@ -7,6 +7,17 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Meta Pixel -->
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '951914809165247');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=951914809165247&ev=PageView&noscript=1"></noscript>
   <style>
     :root {
       --bg: #ffffff;
@@ -518,6 +529,14 @@
             <h3>Application received</h3>
             <p>Placeholder state &mdash; in the live version you'll be redirected straight to the call booking page.</p>
           </div>
+
+          <div class="fq-success" id="fqUnqualified">
+            <div class="tick">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <h3>Application received</h3>
+            <p>Thanks for applying &mdash; we've got your details. Right now this program is built for agencies already doing &#8377;5,00,000+ per month, so we won't book a call just yet. Keep building &mdash; once you cross that mark, come back and apply again.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -592,7 +611,10 @@
     // Wiring config — fill both to go live:
     const CONFIG = {
       SHEET_ENDPOINT: 'https://script.google.com/macros/s/AKfycbwy9rTwCanpnJLoz8JuarIREwGjR5N3Vy0YfdVmw_olgED-mRgC63iTsQdvExzN7WligQ/exec',
-      CALENDLY_URL: 'https://calendly.com/brandslane/agency-ad-acquisition-call'
+      CALENDLY_URL: 'https://calendly.com/brandslane/agency-ad-acquisition-call',
+      // Revenue answers that do NOT qualify for a call — edit this list to
+      // change the threshold (must match the option text exactly)
+      DISQUALIFIED_REVENUE: ['Under ₹5 lakhs']
     };
 
     const steps = Array.from(document.querySelectorAll('.fq-step'));
@@ -621,7 +643,12 @@
       return !!answers[q];
     }
 
+    let maxStep = 0;
     function goTo(i) {
+      if (i > maxStep) {
+        if (window.fbq) fbq('trackCustom', 'StepCompleted', { step_number: maxStep + 1, step: steps[maxStep].dataset.q });
+        maxStep = i;
+      }
       cur = i;
       steps.forEach((s, idx) => s.classList.toggle('active', idx === i));
       fqLabel.textContent = 'Question ' + (i + 1) + ' of ' + steps.length;
@@ -712,6 +739,20 @@
           body: new URLSearchParams(payload)
         }).catch(() => {});
       }
+      // qualification gate — only qualified revenue bands see the calendar
+      const qualified = !CONFIG.DISQUALIFIED_REVENUE.includes(answers.revenue || '');
+      if (window.fbq) {
+        fbq('track', 'Lead');
+        fbq('trackCustom', qualified ? 'QualifiedLead' : 'UnqualifiedLead');
+      }
+      if (!qualified) {
+        document.getElementById('applyForm').style.display = 'none';
+        document.querySelector('.fq-progress-row').style.display = 'none';
+        document.querySelector('.form-card-head h2').textContent = 'Thank you';
+        document.querySelector('.form-card-head p').textContent = 'We review every application personally.';
+        document.getElementById('fqUnqualified').classList.add('show');
+        return;
+      }
       if (CONFIG.CALENDLY_URL) {
         // prefill Calendly's name + email from the form — also keeps the booking
         // email identical to the form email, so downstream lookups match
@@ -744,6 +785,14 @@
         document.getElementById('applyForm').style.display = 'none';
         document.querySelector('.fq-progress-row').style.display = 'none';
         document.getElementById('fqSuccess').classList.add('show');
+      }
+    });
+
+    // Pixel: fire Schedule when Calendly confirms a booking in the embed
+    window.addEventListener('message', e => {
+      if (typeof e.origin === 'string' && e.origin.indexOf('calendly.com') !== -1
+          && e.data && e.data.event === 'calendly.event_scheduled' && window.fbq) {
+        fbq('track', 'Schedule');
       }
     });
 
