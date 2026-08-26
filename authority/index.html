@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agency Scaling Systems — Ad Acquisition For Agencies</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Meta Pixel -->
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '951914809165247');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=951914809165247&ev=PageView&noscript=1"></noscript>
+  <style>
+    :root {
+      /* ---- brand: every accent on the page comes from these three ---- */
+      --accent: #1a56db;
+      --accent-bright: #5a85e5;
+      --accent-deep: #1547b4;
+      --accent-wash: #eff3fc;
+
+      /* ---- grounds ---- */
+      --paper: #ffffff;
+      --paper-soft: #f5f6f8;
+      --ink: #0b0e14;
+      --ink-soft: #151a25;
+      --ink-line: rgba(255,255,255,0.10);
+
+      /* ---- type + lines (the form engine reads these names too) ---- */
+      --text: #0c0e13;
+      --text-secondary: #4c5261;
+      --text-tertiary: #6b7180;
+      --text-faint: #9aa0ad;
+      --border: #e5e7ec;
+      --border-light: #d7dae1;
+      --bg-input: #f5f6f8;
+      --red: #d92d20;
+      --sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+
+      --radius: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 2px 10px rgba(12,14,19,0.05);
+      --shadow: 0 10px 30px rgba(12,14,19,0.07);
+      --shadow-lg: 0 22px 60px rgba(12,14,19,0.13);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      background: var(--paper);
+      color: var(--text);
+      line-height: 1.55;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    ::selection { background: var(--accent); color: #fff; }
+    img { max-width: 100%; }
+
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+    .wrap-narrow { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+    /* nav + hero run wider so the headline lands in 3-4 lines and the media
+       gets real width; text sections below keep the narrower reading measure */
+    .wrap-wide { max-width: 1330px; margin: 0 auto; padding: 0 24px; }
+
+    /* ===== SECTION BANDS ===== */
+    .sec { padding: 92px 0; position: relative; }
+    .sec.soft { background: var(--paper-soft); }
+    .sec.dark { background: var(--ink); color: #fff; }
+    .sec.dark .sec-title, .sec.dark h3 { color: #fff; }
+    .sec.dark .sec-sub { color: rgba(255,255,255,0.62); }
+    .sec.dark .eyebrow { color: var(--accent-bright); }
+    .sec.tight { padding: 56px 0; }
+
+    .eyebrow {
+      display: block; text-align: center;
+      font-size: 12px; font-weight: 700; letter-spacing: 1.9px;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .sec-head { text-align: center; max-width: 860px; margin: 0 auto 52px; }
+    .sec-title {
+      font-size: clamp(28px, 3.7vw, 44px);
+      font-weight: 800; letter-spacing: -1.2px; line-height: 1.16;
+      color: var(--text);
+    }
+    .sec-sub {
+      font-size: 17px; line-height: 1.65; color: var(--text-secondary);
+      margin-top: 16px;
+    }
+    .ac { color: var(--accent); }
+    .sec.dark .ac { color: var(--accent-bright); }
+    u { text-decoration-thickness: 3px; text-underline-offset: 5px; }
+
+    /* ===== BUTTONS ===== */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      font-family: var(--sans); font-size: 16px; font-weight: 700;
+      color: #fff; background: var(--accent);
+      border: none; border-radius: 999px; padding: 15px 34px;
+      cursor: pointer; text-decoration: none; white-space: nowrap;
+      box-shadow: 0 8px 22px color-mix(in srgb, var(--accent) 32%, transparent);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+    .btn:hover {
+      background: var(--accent-deep);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px color-mix(in srgb, var(--accent) 40%, transparent);
+    }
+    .btn-sm { font-size: 14.5px; padding: 11px 24px; }
+    .cta-row { text-align: center; margin-top: 48px; }
+    .cta-note {
+      display: block; font-size: 13.5px; color: var(--text-tertiary); margin-top: 14px;
+    }
+    .sec.dark .cta-note { color: rgba(255,255,255,0.55); }
+
+    /* ===== NAV ===== */
+    .nav {
+      position: sticky; top: 0; z-index: 60;
+      background: rgba(255,255,255,0.86);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .nav.scrolled { border-bottom-color: var(--border); box-shadow: 0 4px 20px rgba(12,14,19,0.05); }
+    .nav-in {
+      display: flex; align-items: center; justify-content: space-between; gap: 20px;
+      height: 74px;
+    }
+    .nav-logo img { height: 30px; width: auto; display: block; }
+    .nav-links { display: flex; align-items: center; gap: 30px; }
+    .nav-links a {
+      font-size: 14.5px; font-weight: 600; color: var(--text-secondary);
+      text-decoration: none; transition: color 0.2s ease;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ===== HERO ===== */
+    .hero { position: relative; padding: 58px 0 64px; overflow: hidden; }
+    .hero::before {
+      content: ''; position: absolute; top: -340px; left: 50%; transform: translateX(-50%);
+      width: 1100px; height: 700px; pointer-events: none;
+      background: radial-gradient(ellipse at center, var(--accent-wash) 0%, rgba(255,255,255,0) 68%);
+    }
+    .hero-grid {
+      position: relative;
+      display: grid; grid-template-columns: 1.16fr 0.84fr; gap: 48px; align-items: center;
+    }
+    /* no hero media → one readable column instead of a dead half */
+    .hero-grid.one-col { grid-template-columns: 1fr; max-width: 900px; }
+    /* Animating a custom angle needs @property; without it the sweep simply
+       sits still and the pill keeps its plain outline. */
+    @property --sweep { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+    .hero-eyebrow {
+      position: relative; isolation: isolate;
+      display: inline-block;
+      font-size: 12.5px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
+      color: var(--accent); background: var(--accent-wash);
+      border: 1px solid color-mix(in srgb, var(--accent) 26%, transparent);
+      border-radius: 999px; padding: 7px 16px; margin-bottom: 22px;
+    }
+    /* the travelling highlight, drawn as a 1.5px ring via a mask */
+    .hero-eyebrow::after {
+      content: ''; position: absolute; inset: -1px; border-radius: inherit;
+      padding: 1.5px; pointer-events: none;
+      background: conic-gradient(from var(--sweep),
+        transparent 0deg 250deg,
+        color-mix(in srgb, var(--accent) 45%, transparent) 300deg,
+        var(--accent) 344deg,
+        color-mix(in srgb, #fff 70%, var(--accent)) 356deg,
+        transparent 360deg);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+              mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+              mask-composite: exclude;
+      animation: sweep 3.4s linear infinite;
+    }
+    /* soft glow trailing the highlight */
+    .hero-eyebrow::before {
+      content: ''; position: absolute; inset: -3px; border-radius: inherit;
+      z-index: -1; pointer-events: none; filter: blur(7px); opacity: 0.55;
+      background: conic-gradient(from var(--sweep),
+        transparent 0deg 280deg, var(--accent) 348deg, transparent 360deg);
+      animation: sweep 3.4s linear infinite;
+    }
+    @keyframes sweep { to { --sweep: 360deg; } }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-eyebrow::after, .hero-eyebrow::before { animation: none; }
+    }
+    .hero-kicker {
+      font-size: 13.5px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;
+      color: var(--text-tertiary); margin-bottom: 12px;
+    }
+    .hero h1 {
+      font-size: clamp(30px, 3.3vw, 46px);
+      font-weight: 800; line-height: 1.13; letter-spacing: -1.5px;
+      margin-bottom: 22px;
+    }
+    .hero-bullets { list-style: none; margin-bottom: 30px; }
+    .hero-bullets li {
+      display: flex; align-items: flex-start; gap: 11px;
+      font-size: 16.5px; color: var(--text-secondary); line-height: 1.5;
+      margin-bottom: 12px;
+    }
+    .hero-bullets svg { flex-shrink: 0; margin-top: 3px; }
+    .hero-cta { display: flex; align-items: center; gap: 30px; flex-wrap: wrap; }
+    .hero-stats { display: flex; gap: 28px; }
+    .hero-stat .n {
+      font-size: 21px; font-weight: 800; letter-spacing: -0.5px; line-height: 1.1;
+      color: var(--text);
+    }
+    .hero-stat .l { font-size: 12.5px; color: var(--text-tertiary); line-height: 1.35; }
+    .hero-rating {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13.5px; color: var(--text-tertiary); margin-top: 22px;
+    }
+    .hero-rating .stars { color: #f0a500; letter-spacing: 1px; font-size: 14px; }
+
+    .media-frame {
+      position: relative; border-radius: var(--radius-lg); overflow: hidden;
+      background: var(--ink); box-shadow: var(--shadow-lg);
+      aspect-ratio: 16 / 10.6;
+    }
+    .media-frame video, .media-frame img, .media-frame iframe {
+      width: 100%; height: 100%; object-fit: cover; display: block; border: 0;
+    }
+
+    /* ===== CREDIBILITY STRIP ===== */
+    .cred-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 20px; text-align: center; align-items: stretch;
+    }
+    .cred-stat { padding: 6px 20px; }
+    .cred-stat + .cred-stat { border-left: 1px solid var(--ink-line); }
+    .cred-stat .n {
+      font-size: clamp(30px, 4vw, 46px); font-weight: 800;
+      letter-spacing: -1.4px; line-height: 1.1; color: var(--accent-bright);
+      margin-bottom: 8px;
+    }
+    .cred-stat .l { font-size: 14.5px; color: rgba(255,255,255,0.66); line-height: 1.45; }
+    .cred-label {
+      text-align: center; font-size: 12.5px; font-weight: 600; letter-spacing: 1.4px;
+      text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 34px;
+    }
+    .cred-logos {
+      display: flex; align-items: center; justify-content: center;
+      gap: 30px 46px; flex-wrap: wrap; margin-top: 46px;
+      padding-top: 40px; border-top: 1px solid var(--ink-line);
+    }
+    .cred-logos img {
+      height: 27px; object-fit: contain;
+      filter: brightness(0) invert(1) opacity(0.62);
+      transition: filter 0.25s ease;
+    }
+    .cred-logos img.lg { height: 38px; }
+    .cred-logos img:hover { filter: brightness(0) invert(1) opacity(1); }
+
+    /* ===== SHOWCASE MARQUEE ===== */
+    .showcase { overflow: hidden; padding: 8px 0; }
+    .showcase-track { display: flex; gap: 18px; width: max-content; animation: marquee 56s linear infinite; }
+    .showcase:hover .showcase-track { animation-play-state: paused; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .showcase-item {
+      width: 232px; border-radius: var(--radius); overflow: hidden;
+      background: var(--paper-soft); box-shadow: var(--shadow-sm); flex-shrink: 0;
+    }
+    .showcase-item img { width: 100%; display: block; }
+
+    /* ===== PAIN ===== */
+    .pain-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    /* with an image: pointers stack down the left, visual holds the right */
+    .pain-split { display: grid; grid-template-columns: 1.55fr 1fr; gap: 46px; align-items: start; }
+    .pain-split .pain-grid { grid-template-columns: 1fr; }
+    .pain-media {
+      position: sticky; top: 104px;
+      border-radius: var(--radius-lg); overflow: hidden;
+      box-shadow: var(--shadow-lg); border: 1px solid var(--border);
+    }
+    .pain-media img { width: 100%; display: block; }
+    .pain-num {
+      flex-shrink: 0; width: 27px; height: 27px; border-radius: 9px;
+      background: var(--accent-wash); color: var(--accent);
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 13.5px; font-weight: 800; letter-spacing: 0; margin-top: -1px;
+    }
+    .pain-card h3 u {
+      text-decoration-thickness: 2px; text-underline-offset: 3px;
+      text-decoration-color: color-mix(in srgb, var(--accent) 55%, transparent);
+    }
+    .pain-card {
+      background: var(--paper); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 26px 26px 24px;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+    .pain-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .pain-card h3 {
+      display: flex; align-items: flex-start; gap: 11px;
+      font-size: 18px; font-weight: 700; letter-spacing: -0.3px; line-height: 1.35;
+      margin-bottom: 10px;
+    }
+    .pain-card h3 svg { flex-shrink: 0; margin-top: 2px; color: var(--accent); }
+    .pain-card p { font-size: 15px; line-height: 1.65; color: var(--text-secondary); }
+
+    /* ===== BOARD (full-width teaching board, e.g. the offer playbook) ===== */
+    .board-wrap { max-width: 1180px; margin: 0 auto; }
+    .board-img { display: block; width: 100%; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); }
+
+    /* ===== CASE STUDIES ===== */
+    .case-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .case-grid.n2 { grid-template-columns: repeat(2, 1fr); }
+    .case-grid.n1 { grid-template-columns: 1fr; max-width: 560px; margin: 0 auto; }
+    .case-card {
+      background: var(--ink-soft); border: 1px solid var(--ink-line);
+      border-radius: var(--radius-lg); overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .case-card > img { width: 100%; display: block; border-bottom: 1px solid var(--ink-line); }
+    .case-body { padding: 24px 24px 22px; display: flex; flex-direction: column; flex: 1; }
+    .case-tag {
+      align-self: flex-start;
+      font-size: 11.5px; font-weight: 700; letter-spacing: 0.9px; text-transform: uppercase;
+      color: var(--accent-bright);
+      background: color-mix(in srgb, var(--accent-bright) 15%, transparent);
+      border-radius: 999px; padding: 5px 12px; margin-bottom: 14px;
+    }
+    .case-card h3 { font-size: 18.5px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 9px; }
+    .case-card p { font-size: 14.5px; line-height: 1.65; color: rgba(255,255,255,0.66); margin-bottom: 18px; }
+    .case-result {
+      font-size: 19px; font-weight: 800; letter-spacing: -0.5px;
+      color: #fff; margin: auto 0 16px;
+      padding-top: 16px; border-top: 1px solid var(--ink-line);
+    }
+    .case-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .case-result:last-child { margin-bottom: 0; }
+    .case-metric .n {
+      font-size: 19px; font-weight: 800; letter-spacing: -0.5px;
+      color: var(--accent-bright); line-height: 1.15;
+    }
+    .case-metric .l {
+      font-size: 11.5px; color: rgba(255,255,255,0.52); line-height: 1.35; margin-top: 3px;
+    }
+
+    /* ===== SERVICES ===== */
+    .svc { display: flex; flex-direction: column; gap: 26px; }
+    .svc-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;
+      background: var(--paper); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 34px 38px;
+      box-shadow: var(--shadow-sm);
+    }
+    .svc-row.flip .svc-text { order: 2; }
+    .svc-row.no-media { grid-template-columns: 1fr; }
+    .svc-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px; border-radius: 10px;
+      background: var(--accent-wash); color: var(--accent);
+      font-size: 14px; font-weight: 800; margin-bottom: 14px;
+    }
+    .svc-text h3 { font-size: 23px; font-weight: 800; letter-spacing: -0.6px; margin-bottom: 10px; }
+    .svc-text > p { font-size: 15.5px; line-height: 1.7; color: var(--text-secondary); }
+    .svc-list { list-style: none; margin-top: 16px; }
+    .svc-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 14.5px; color: var(--text-secondary); line-height: 1.55; margin-bottom: 9px;
+    }
+    .svc-list svg { flex-shrink: 0; margin-top: 3px; color: var(--accent); }
+    /* fixed 3:2 box; the image fills its width from the top-left corner and
+       anything taller is cropped at the bottom (a tall board still reads) */
+    .svc-media { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); aspect-ratio: 3 / 2; }
+    .svc-media img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: top left; }
+
+    /* ===== VALUE STACK ===== */
+    .stack { max-width: 880px; margin: 0 auto; }
+    .stack-panel {
+      background: var(--paper); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow);
+    }
+    .stack-row {
+      display: grid; grid-template-columns: auto 1fr auto;
+      gap: 16px; align-items: start;
+      padding: 20px 26px;
+    }
+    .stack-row + .stack-row { border-top: 1px solid var(--border); }
+    .stack-row:nth-child(odd) { background: color-mix(in srgb, var(--accent) 2.5%, transparent); }
+    .stack-tick {
+      flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+      background: var(--accent); color: #fff;
+      display: inline-flex; align-items: center; justify-content: center; margin-top: 1px;
+    }
+    .stack-row h3 { font-size: 16.5px; font-weight: 700; letter-spacing: -0.2px; margin-bottom: 4px; }
+    .stack-row p { font-size: 14.5px; line-height: 1.6; color: var(--text-secondary); }
+    .stack-value {
+      font-size: 14.5px; font-weight: 700; color: var(--accent);
+      white-space: nowrap; margin-top: 2px;
+    }
+    .stack-total {
+      display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+      padding: 20px 26px; border-top: 2px solid var(--text);
+      background: var(--paper-soft);
+      font-size: 17px; font-weight: 800; letter-spacing: -0.3px;
+    }
+    .stack-total .v { color: var(--accent); }
+    .stack-note {
+      text-align: center; font-size: 13.5px; color: var(--text-tertiary); margin-top: 20px;
+    }
+
+    /* ===== PROCESS ===== */
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .step { position: relative; padding-top: 26px; }
+    .step::before {
+      content: ''; position: absolute; top: 12px; left: 0; right: 0;
+      height: 2px; background: var(--border);
+    }
+    .step:first-child::before { left: 50%; }
+    .step:last-child::before { right: 50%; }
+    .step-dot {
+      position: absolute; top: 5px; left: 50%; transform: translateX(-50%);
+      width: 16px; height: 16px; border-radius: 50%;
+      background: var(--accent); border: 4px solid var(--paper-soft);
+      box-shadow: 0 0 0 1px var(--accent);
+    }
+    .step-in { text-align: center; padding: 20px 16px 0; }
+    .step-n {
+      font-size: 12px; font-weight: 800; letter-spacing: 1.4px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 8px;
+    }
+    .step-in h3 { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 8px; }
+    .step-in p { font-size: 14.5px; line-height: 1.6; color: var(--text-secondary); }
+
+    /* ===== COMPARISON ===== */
+    .cmp { max-width: 900px; margin: 0 auto; border: 1px solid var(--border);
+           border-radius: var(--radius); overflow: hidden; background: var(--paper); }
+    .cmp table { width: 100%; border-collapse: collapse; }
+    .cmp th, .cmp td { padding: 14px 20px; text-align: left; font-size: 15px; }
+    .cmp thead th { background: var(--paper-soft); font-weight: 700; font-size: 14px; }
+    .cmp thead th:nth-child(2) { color: var(--accent); }
+    .cmp th:nth-child(2), .cmp th:nth-child(3),
+    .cmp td:nth-child(2), .cmp td:nth-child(3) { text-align: center; width: 132px; }
+    .cmp tbody tr + tr { border-top: 1px solid var(--border); }
+    .cmp td:first-child { color: var(--text-secondary); }
+    .cmp .yes { color: #14804a; font-weight: 700; }
+    .cmp .no { color: var(--text-faint); font-weight: 700; }
+
+    /* ===== FOUNDER ===== */
+    .founder-grid { display: grid; grid-template-columns: 300px 1fr; gap: 48px; align-items: start; }
+    .founder-photo {
+      border-radius: var(--radius-lg); overflow: hidden;
+      box-shadow: var(--shadow-lg); border: 1px solid var(--ink-line);
+    }
+    /* portrait crop in CSS so a landscape original can be dropped in untouched */
+    .founder-photo { aspect-ratio: 4 / 5; }
+    .founder-photo img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center 26%; }
+    .founder-name { margin-top: 20px; }
+    .founder-name .n { font-size: 18px; font-weight: 700; color: #fff; }
+    .founder-name .r { font-size: 14px; color: rgba(255,255,255,0.55); margin-top: 2px; }
+    .founder-letter p {
+      font-size: 16.5px; line-height: 1.78; color: rgba(255,255,255,0.76);
+      margin-bottom: 18px;
+    }
+    .founder-letter p:first-child::first-letter { font-size: 1.05em; font-weight: 700; color: #fff; }
+    .founder-sign {
+      font-size: 15.5px; line-height: 1.6; color: #fff; font-weight: 600;
+      margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--ink-line);
+      white-space: pre-line;
+    }
+
+    /* ===== WINS ===== */
+    .wins-grid { columns: 3; column-gap: 18px; }
+    .win-card {
+      break-inside: avoid; margin-bottom: 18px;
+      background: var(--paper); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .win-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .win-card img { width: 100%; display: block; }
+    .wins-note {
+      font-size: 13.5px; font-style: italic; color: var(--text-tertiary);
+      text-align: center; margin-top: 26px;
+    }
+
+    /* ===== TESTIMONIALS ===== */
+    .tst-grid { columns: 3; column-gap: 18px; }
+    .tst {
+      break-inside: avoid; margin-bottom: 18px;
+      background: var(--paper); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px 24px 20px; box-shadow: var(--shadow-sm);
+    }
+    .tst p { font-size: 15px; line-height: 1.68; color: var(--text-secondary); }
+    .tst .who { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); }
+    .tst .who .n { font-size: 14.5px; font-weight: 700; }
+    .tst .who .r { font-size: 13px; color: var(--text-tertiary); }
+    .tst-quote { color: var(--accent); font-size: 26px; line-height: 1; font-weight: 800; margin-bottom: 10px; display: block; }
+
+    /* ===== WHO IS THIS FOR ===== */
+    .who-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .who-card {
+      background: var(--paper); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px 26px; text-align: center;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+    .who-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); }
+    .who-ico {
+      width: 46px; height: 46px; margin: 0 auto 16px; border-radius: 13px;
+      background: var(--accent-wash); color: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .who-card h3 { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 8px; }
+    .who-card p { font-size: 14.5px; line-height: 1.6; color: var(--text-secondary); }
+
+    /* ===== APPLY ===== */
+    .apply-head { text-align: center; max-width: 760px; margin: 0 auto 40px; }
+
+    /* ===== FAQ ===== */
+    .faq { max-width: 860px; margin: 0 auto; }
+    .faq-item {
+      background: var(--paper); border: 1px solid var(--border);
+      border-radius: var(--radius); margin-bottom: 12px; overflow: hidden;
+    }
+    .faq-q {
+      display: flex; align-items: center; justify-content: space-between; gap: 18px;
+      width: 100%; text-align: left; cursor: pointer;
+      font-family: var(--sans); font-size: 16.5px; font-weight: 700; color: var(--text);
+      background: none; border: none; padding: 20px 24px;
+    }
+    .faq-q .ico {
+      flex-shrink: 0; width: 22px; height: 22px; position: relative;
+      transition: transform 0.25s ease;
+    }
+    .faq-q .ico::before, .faq-q .ico::after {
+      content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      background: var(--accent); border-radius: 2px;
+    }
+    .faq-q .ico::before { width: 14px; height: 2.5px; }
+    .faq-q .ico::after { width: 2.5px; height: 14px; transition: opacity 0.25s ease; }
+    .faq-item.open .faq-q .ico::after { opacity: 0; }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.32s ease; }
+    .faq-a p {
+      font-size: 15.5px; line-height: 1.72; color: var(--text-secondary);
+      padding: 0 24px 22px;
+    }
+
+    /* ===== FINAL CTA + FOOTER ===== */
+    .final { text-align: center; }
+    .final h2 {
+      font-size: clamp(27px, 3.6vw, 42px); font-weight: 800;
+      letter-spacing: -1.2px; line-height: 1.18; color: #fff;
+      max-width: 820px; margin: 0 auto 30px;
+    }
+    .foot {
+      margin-top: 70px; padding-top: 34px; border-top: 1px solid var(--ink-line);
+    }
+    .foot-logo { text-align: center; margin-bottom: 26px; }
+    .foot-logo img { height: 28px; width: auto; }
+    .foot-addr {
+      display: flex; justify-content: center; gap: 60px; flex-wrap: wrap;
+      margin-bottom: 26px; text-align: center;
+    }
+    .foot-addr .t {
+      font-size: 13px; font-weight: 700; letter-spacing: 0.9px; text-transform: uppercase;
+      color: rgba(255,255,255,0.82); margin-bottom: 6px;
+    }
+    .foot-addr .l { font-size: 13px; line-height: 1.65; color: rgba(255,255,255,0.5); }
+    .foot-links { text-align: center; font-size: 13px; color: rgba(255,255,255,0.5); }
+    .foot-links a { color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; }
+    .foot-links a:hover { color: #fff; }
+    .foot-links .sep { margin: 0 9px; color: rgba(255,255,255,0.22); }
+    .foot-disclaimer {
+      font-size: 11.5px; line-height: 1.7; color: rgba(255,255,255,0.34);
+      max-width: 900px; margin: 22px auto 0; text-align: center;
+    }
+
+    /* ===== ANIMATION ===== */
+    @keyframes fadeUp { to { opacity: 1; transform: none; } }
+    .anim { opacity: 0; transform: translateY(18px); animation: fadeUp 0.65s ease forwards; }
+    .a1 { animation-delay: 0.05s; } .a2 { animation-delay: 0.13s; }
+    .a3 { animation-delay: 0.21s; } .a4 { animation-delay: 0.30s; } .a5 { animation-delay: 0.40s; }
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .anim, .reveal { opacity: 1 !important; transform: none !important; animation: none !important; }
+      .showcase-track { animation: none; }
+    }
+
+    /* ===== FORM ENGINE (shared by every structure — see _shared/form.css) =====
+       Requires these :root tokens: --sans --text --text-secondary --text-tertiary
+       --text-faint --border --border-light --bg-input --accent --accent-bright --red */
+    /* ===== FORM CARD ===== */
+    .apply { padding: 34px 0 72px; }
+    .form-card {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 36px 40px 32px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.05);
+    }
+    .form-card-head { text-align: center; margin-bottom: 40px; }
+    .form-card-head h2 {
+      font-size: 24px; font-weight: 800; letter-spacing: -0.5px;
+      margin-bottom: 6px;
+    }
+    .form-card-head p { font-size: 14px; color: var(--text-tertiary); }
+
+    /* ===== STEP QUESTIONNAIRE ===== */
+    .fq-progress-row {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 14px; margin-bottom: 26px;
+    }
+    .fq-progress-label { font-size: 13px; font-weight: 600; color: var(--text-tertiary); }
+    .fq-bar {
+      height: 8px; width: 210px; max-width: 50%;
+      background: var(--bg-input); border: 1px solid var(--border);
+      border-radius: 50px; overflow: hidden;
+    }
+    .fq-bar-fill {
+      height: 100%; width: 20%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+      transition: width 0.35s ease;
+    }
+    .fq-step { display: none; }
+    .fq-step.active { display: block; animation: fqIn 0.3s ease; }
+    @keyframes fqIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: none; }
+    }
+    .fq-title {
+      font-size: 26px; font-weight: 600; letter-spacing: -0.4px;
+      text-align: left; margin-bottom: 26px; line-height: 1.3;
+    }
+    .fq-sub {
+      font-size: 15px; color: var(--text-tertiary);
+      text-align: left; margin: -18px 0 26px;
+    }
+    .fq-options { display: grid; grid-template-columns: 1fr; gap: 10px; max-width: 520px; }
+    .fq-textarea {
+      font-family: var(--sans); font-size: 20px; color: var(--text);
+      width: 100%; line-height: 1.5;
+      padding: 6px 0 9px; background: transparent;
+      border: none; border-bottom: 1px solid var(--border-light);
+      border-radius: 0;
+      outline: none;
+      appearance: none; -webkit-appearance: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .fq-textarea::placeholder { color: var(--text-faint); }
+    .fq-textarea:focus {
+      border-color: var(--accent-bright);
+      box-shadow: 0 1px 0 0 var(--accent-bright);
+    }
+    .fq-option {
+      font-family: var(--sans); font-size: 16px; font-weight: 400;
+      color: var(--text); text-align: left;
+      background: color-mix(in srgb, var(--accent) 4%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+      border-radius: 6px; padding: 11px 14px;
+      cursor: pointer; width: 100%;
+      display: flex; align-items: center; gap: 12px;
+      transition: background 0.15s ease, box-shadow 0.15s ease;
+    }
+    .fq-option:hover { background: color-mix(in srgb, var(--accent) 9%, transparent); }
+    .fq-option.selected {
+      background: color-mix(in srgb, var(--accent) 13%, transparent);
+      box-shadow: inset 0 0 0 1px var(--accent);
+      font-weight: 600;
+    }
+    .fq-option .key {
+      flex-shrink: 0; width: 22px; height: 22px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: #fff; border: 1px solid color-mix(in srgb, var(--accent) 50%, transparent);
+      border-radius: 4px; font-size: 11px; font-weight: 700; color: var(--accent);
+    }
+    .fq-option.selected .key { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .fq-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 14px; margin-top: 26px;
+    }
+    .fq-back {
+      font-family: var(--sans); font-size: 13.5px; font-weight: 600;
+      color: var(--text); background: var(--bg-input);
+      border: 1px solid var(--border-light); border-radius: 10px;
+      padding: 10px 18px; cursor: pointer;
+      white-space: nowrap;
+      transition: border-color 0.2s ease, opacity 0.2s ease;
+    }
+    .fq-back:hover:not(:disabled) { border-color: #a8aab2; }
+    .fq-back:disabled { opacity: 0.35; cursor: not-allowed; }
+    .fq-hint { font-size: 12.5px; color: var(--text-tertiary); text-align: right; }
+    .fq-nav-right { display: flex; align-items: center; gap: 14px; }
+    .fq-next {
+      font-family: var(--sans); font-size: 15px; font-weight: 700;
+      color: #fff; background: var(--accent);
+      border: none; border-radius: 6px; padding: 10px 26px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s ease, opacity 0.2s ease;
+    }
+    .fq-next:hover:not(:disabled) { background: var(--accent-bright); }
+    .fq-next:disabled { opacity: 0.4; cursor: not-allowed; }
+    .fq-error {
+      display: none;
+      font-size: 13.5px; font-weight: 600; color: var(--red);
+      margin-top: 16px; text-align: left;
+    }
+    .fq-error.show { display: block; }
+    .fq-success { display: none; text-align: center; padding: 26px 0 14px; }
+    .fq-success.show { display: block; animation: fqIn 0.3s ease; }
+    .fq-success .tick {
+      width: 54px; height: 54px; border-radius: 50%;
+      background: color-mix(in srgb, var(--accent-bright) 14%, transparent);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px;
+    }
+    .fq-success h3 { font-size: 21px; font-weight: 800; margin-bottom: 8px; }
+    .fq-success p { font-size: 14px; color: var(--text-secondary); max-width: 380px; margin: 0 auto; }
+
+    #calEmbed { display: none; height: 700px; margin-top: 4px; }
+    #calEmbed iframe { width: 100%; height: 100%; border: 0; }
+
+    .form-grid { display: grid; grid-template-columns: 1fr; gap: 28px; max-width: 560px; }
+    .field { display: flex; flex-direction: column; gap: 4px; }
+    .field.full { grid-column: 1 / -1; }
+    .field label { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
+    .field input {
+      font-family: var(--sans);
+      font-size: 20px; color: var(--text);
+      padding: 6px 0 9px;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border-light);
+      border-radius: 0;
+      outline: none; width: 100%;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      appearance: none; -webkit-appearance: none;
+    }
+    .field input::placeholder { color: var(--text-faint); }
+    .field input:focus {
+      border-color: var(--accent-bright);
+      box-shadow: 0 1px 0 0 var(--accent-bright);
+    }
+
+    .form-submit {
+      justify-self: start;
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--accent); color: #fff;
+      padding: 14px 32px; border-radius: 6px;
+      font-family: var(--sans); font-size: 17px; font-weight: 700;
+      border: none; cursor: pointer;
+      margin-top: 6px;
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+    .form-submit:hover {
+      background: var(--accent-bright);
+      transform: translateY(-1px);
+    }
+
+    .form-note {
+      display: flex; align-items: center; justify-content: flex-start; gap: 7px;
+      font-size: 12.5px; color: var(--text-tertiary);
+      margin-top: -6px; text-align: left;
+    }
+    .form-note svg { flex-shrink: 0; }
+
+    @media (max-width: 600px) {
+      .apply { padding: 26px 0 56px; }
+      .form-card { padding: 24px 16px 22px; }
+      .form-card-head { margin-bottom: 28px; }
+      .fq-title { font-size: 21px; }
+      .fq-sub { font-size: 14px; }
+      .fq-options { grid-template-columns: 1fr; }
+      .fq-textarea { font-size: 17px; }
+      .form-grid { grid-template-columns: 1fr; gap: 22px; }
+      .field { grid-column: 1 / -1; }
+      .field input { font-size: 17px; }
+      .form-submit { font-size: 16px; padding: 16px 20px; width: 100%; justify-content: center; }
+      .fq-nav { flex-wrap: wrap; row-gap: 12px; }
+      .fq-nav-right {
+        width: 100%; order: -1;
+        flex-direction: column; align-items: stretch; gap: 10px;
+        }
+      .fq-hint { text-align: left; }
+      .fq-next { width: 100%; padding: 13px 20px; }
+      #calEmbed { height: 940px; }
+    }
+
+
+    /* form card, restyled for this structure */
+    .apply { padding: 0; }
+    .form-card {
+      max-width: 820px; border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg); padding: 40px 44px 36px;
+    }
+    .fq-next, .form-submit { border-radius: 999px; }
+    .form-submit { padding: 15px 34px; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1000px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+      .case-grid { grid-template-columns: repeat(2, 1fr); }
+      .who-grid { grid-template-columns: repeat(2, 1fr); }
+      .steps { grid-template-columns: repeat(2, 1fr); row-gap: 34px; }
+      .step::before { display: none; }
+      .step-dot { display: none; }
+      .step { padding-top: 0; }
+      .pain-split { grid-template-columns: 1fr; gap: 30px; }
+      .pain-media { position: static; }
+      .founder-grid { grid-template-columns: 1fr; gap: 30px; }
+      .founder-photo { max-width: 280px; }
+      .wins-grid, .tst-grid { columns: 2; }
+      .svc-row { grid-template-columns: 1fr; gap: 26px; }
+      .svc-row.flip .svc-text { order: 0; }
+    }
+    @media (max-width: 640px) {
+      .sec { padding: 60px 0; }
+      .sec.tight { padding: 40px 0; }
+      .wrap, .wrap-narrow, .wrap-wide { padding: 0 18px; }
+      .nav-links { display: none; }
+      .nav-in { height: 64px; }
+      .nav-logo img { height: 25px; }
+      .hero { padding: 40px 0 54px; }
+      .hero h1 { letter-spacing: -1.1px; }
+      .hero-bullets li { font-size: 15.5px; }
+      .hero-cta { flex-direction: column; align-items: stretch; gap: 20px; }
+      .hero-cta .btn { width: 100%; }
+      .hero-stats { justify-content: space-between; }
+      .sec-head { margin-bottom: 34px; }
+      .sec-sub { font-size: 15.5px; }
+      .pain-grid, .case-grid, .case-grid.n2, .who-grid { grid-template-columns: 1fr; }
+      .pain-split { grid-template-columns: 1fr; gap: 26px; }
+      .pain-media { position: static; }
+      .cred-stats { grid-template-columns: 1fr; gap: 26px; }
+      .cred-stat + .cred-stat { border-left: none; border-top: 1px solid var(--ink-line); padding-top: 22px; }
+      .cred-logos { gap: 24px 30px; }
+      .svc-row { padding: 26px 22px; }
+      .stack-row { grid-template-columns: auto 1fr; padding: 17px 18px; }
+      .stack-value { grid-column: 2; margin-top: 6px; }
+      .stack-total { padding: 17px 18px; font-size: 15.5px; }
+      .wins-grid, .tst-grid { columns: 1; }
+      .showcase-item { width: 176px; }
+      .form-card { padding: 26px 18px 24px; }
+      .cmp th, .cmp td { padding: 12px 14px; font-size: 14px; }
+      .cmp th:nth-child(2), .cmp th:nth-child(3),
+      .cmp td:nth-child(2), .cmp td:nth-child(3) { width: 74px; }
+      .foot-addr { gap: 28px; }
+      .desk-only { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="nav">
+    <div class="wrap-wide nav-in">
+      <a href="#" class="nav-logo"><img src="Content/agency-scaling-systems-logo.png" alt="Agency Scaling Systems by Brandslane" loading="lazy"></a>
+        <nav class="nav-links"><a href="#cases">Results</a><a href="#services">What we build</a><a href="#testimonials">Reviews</a></nav>
+      <a href="#apply" class="btn btn-sm">Scale My Agency</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap-wide hero-grid">
+      <div>
+      <span class="hero-eyebrow anim a1">For agency founders doing over $5K/month</span>
+      <p class="hero-kicker anim a1">We build your acquisition machine to:</p>
+        <h1 class="anim a2">Scale Your Agency With <br class="desk-only">Ads Acquisition System That Scales You Over <span class="ac">$50k/month</span> &mdash; With <u>4-8 Clients Each Month</u>.</h1>
+        <ul class="hero-bullets anim a3">
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.7" opacity=".28"/><path d="M8 12.4l2.6 2.6L16 9.6"/></svg><span>We build the offer, creatives, landing page and booking flow — then run the ads for 60 days.</span></li>
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.7" opacity=".28"/><path d="M8 12.4l2.6 2.6L16 9.6"/></svg><span>Every application is qualified before it reaches your calendar.</span></li>
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.7" opacity=".28"/><path d="M8 12.4l2.6 2.6L16 9.6"/></svg><span>At handover the account, creatives and system are yours to keep.</span></li>
+        </ul>
+        <div class="hero-cta anim a4">
+          <a href="#apply" class="btn">Scale My Agency <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12 5l7 7-7 7"/></svg></a>
+        </div>
+        <div class="hero-rating anim a5"><span class="stars">★★★★★</span><span>Rated by 80+ agency owners</span></div>
+      </div>
+      <div class="media-frame anim a4"><img src="Content/founder-video-poster.jpg" alt="Agency Scaling Systems by Brandslane" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="sec tight dark">
+    <div class="wrap">
+      <p class="cred-label reveal">The track record behind this system</p>
+      <div class="cred-stats reveal">
+        <div class="cred-stat"><div class="n">110</div><div class="l">agency owners scaled through our systems</div></div>
+        <div class="cred-stat"><div class="n">₹550 Cr+</div><div class="l">in client revenue generated with ads</div></div>
+        <div class="cred-stat"><div class="n">90%+</div><div class="l">client success rate across the programme</div></div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="sec">
+    <div class="wrap">
+    <div class="sec-head reveal">
+        <h2 class="sec-title">You don't have a delivery problem. You have an <span class="ac">acquisition problem</span>.</h2>
+        <p class="sec-sub">Five things we hear in almost every first call with a $5K–$50K/month agency founder.</p>
+    </div>
+      <div class="pain-split">
+        <div class="pain-grid">
+        <div class="pain-card reveal"><h3><span class="pain-num">1</span><span>Your pipeline is <u>referrals and outbound</u> — and both went quiet</span></h3><p>Referrals are somebody else's decision and cold outreach is a headcount problem. Neither scales on purpose. We build the one channel you can turn up: paid acquisition into an application funnel you own.</p></div>
+        <div class="pain-card reveal"><h3><span class="pain-num">2</span><span>You keep <u>flipping between delivery and sales</u> and can't scale the agency</span></h3><p>Most agencies plateau because the founder is the only person who can fill the pipeline. The fix isn't more hustle, it's infrastructure — offer, creatives, funnel and follow-up running whether or not you're on LinkedIn that week.</p></div>
+        <div class="pain-card reveal"><h3><span class="pain-num">3</span><span>Your offer and your lead quality <u>don't match</u> — the reason you can't charge right</span></h3><p>Cheap leads come from mismatched positioning. We rebuild the offer first — who it's for, what it promises, what it costs — then qualify on revenue inside the form, so unqualified founders never reach your calendar.</p></div>
+        <div class="pain-card reveal"><h3><span class="pain-num">4</span><span>You tried <u>running your own ads</u> and it burned money</span></h3><p>Almost every agency founder has. Agency ads fail on offer and follow-up far more often than on targeting. We run this exact machine for ourselves and for 300+ brands, and we run yours for 60 days before you touch it.</p></div>
+        <div class="pain-card reveal"><h3><span class="pain-num">5</span><span>You can't <u>qualify and reject</u> leads because closing everyone is important to your agency</span></h3><p>When every deal has to close, you take the ones that don't fit — and they cost you in delivery, in margin, and in the case studies you never get to tell. Volume is what lets you say no: the form turns away anyone under your floor before they ever reach your calendar.</p></div>
+        </div>
+        <div class="pain-media reveal"><img src="Content/pain-visual.jpg" alt="Two agency founders working through the acquisition build" loading="lazy"></div>
+      </div>
+    <div class="cta-row reveal"><a href="#apply" class="btn">Scale My Agency <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12 5l7 7-7 7"/></svg></a><span class="cta-note">30-minute call. You'll leave with the acquisition plan whether or not we work together.</span></div>
+    </div>
+  </section>
+
+
+
+  <section class="sec soft">
+    <div class="wrap">
+    <div class="sec-head reveal">
+        <h2 class="sec-title">What it looks like for <span class="ac">100+ other founders</span></h2>
+    </div>
+      <div class="wins-grid reveal">
+        <div class="win-card"><img src="Content/wins/win-01.jpg" alt="3 clients closed this month — now averaging 12-15 clients, up from 3-4" loading="lazy"></div>
+        <div class="win-card"><img src="Content/wins/win-02.png" alt="Two clients closed — $1.5k and $3k, payment received" loading="lazy"></div>
+        <div class="win-card"><img src="Content/wins/win-03.png" alt="Client retainer raised from ₹10k to ₹60k+ per month" loading="lazy"></div>
+        <div class="win-card"><img src="Content/wins/win-04.png" alt="February wins — four retainers received, two more invoiced" loading="lazy"></div>
+        <div class="win-card"><img src="Content/wins/win-05.png" alt="Agency owner closing $3,000 and $6,000 deals" loading="lazy"></div>
+        <div class="win-card"><img src="Content/wins/win-06.png" alt="3 new brands closed this month, 4 total closes" loading="lazy"></div>
+        <div class="win-card"><img src="Content/wins/win-07.png" alt="Four closes — fintech at $1,600/mo, a $2,270/mo renewal and a $2,600 SaaS project" loading="lazy"></div>
+        <div class="win-card"><img src="Content/wins/win-08.png" alt="9 meetings, 3 closes — skincare, sales coach and supplements brands" loading="lazy"></div>
+        <div class="win-card"><img src="Content/wins/win-09.png" alt="$3,200 SEO deal closed — the agency's first $3,000+ deal" loading="lazy"></div>
+        <div class="win-card"><img src="Content/wins/win-10.png" alt="2 more brands onboarded at 50K and 65K retainers plus ad spend" loading="lazy"></div>
+        <div class="win-card"><img src="Content/wins/win-11.png" alt="April closes — Switzerland brand at $3k, Sweden at $1.8k, UK next" loading="lazy"></div>
+        <div class="win-card"><img src="Content/wins/win-12.png" alt="Indian food delivery startup closed at $4,000 — biggest close to date" loading="lazy"></div>
+      </div>
+      <p class="wins-note reveal">*a slice of the Agency Scaling Systems community — and there are many more.</p>
+    </div>
+  </section>
+
+  <section id="cases" class="sec dark">
+    <div class="wrap">
+    <div class="sec-head reveal">
+        <h2 class="sec-title">Our own agency runs on <span class="ac">this exact system</span></h2>
+        <p class="sec-sub">Before we sold it to anyone, we built it for ourselves — twice.</p>
+    </div>
+      <div class="case-grid n2">
+      <article class="case-card reveal">
+      <img src="Content/cases/brandslane-calls-trend.png" alt="The agency we built this acquisition machine for first" loading="lazy">
+        <div class="case-body"><span class="case-tag">Brandslane · D2C advertising marketing</span>
+          <h3>The agency we built this acquisition machine for first</h3>
+          <p>Brandslane doesn't cold call and doesn't wait on referrals. Every client since 2022 came through paid acquisition into an application funnel — the same offer build, creatives, landing page and qualification flow we install for you.</p>
+          <div class="case-result">800+ Sales Calls Booked</div>
+        </div>
+      </article>
+      <article class="case-card reveal">
+      <img src="Content/cases/ass-2023.png" alt="Then we gave the Agency Playbook to 110 agency owners" loading="lazy">
+        <div class="case-body"><span class="case-tag">Agency Scaling Systems</span>
+          <h3>Then we gave the Agency Playbook to 110 agency owners</h3>
+          <p>We packaged the same acquisition and operation system as a programme for agency founders. Tens of founders scaled to multi six figures, and the pattern held: the constraint was never delivery, it was distribution.</p>
+          <div class="case-result">110 agencies through the programme</div>
+        </div>
+      </article>
+      </div>
+    <div class="cta-row reveal"><a href="#apply" class="btn">Scale My Agency <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12 5l7 7-7 7"/></svg></a><span class="cta-note">30-minute call. You'll leave with the acquisition plan whether or not we work together.</span></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+    <div class="sec-head reveal">
+        <h2 class="sec-title">How the first 60 days go</h2>
+    </div>
+      <div class="steps">
+      <div class="step reveal"><span class="step-dot"></span><div class="step-in"><div class="step-n">Step 1</div><h3>Offer &amp; Business</h3><p>Day 0–1. We work out the offer, the price and the target list together, and collect access — ad account, Slack, Calendly, domain.</p></div></div>
+      <div class="step reveal"><span class="step-dot"></span><div class="step-in"><div class="step-n">Step 2</div><h3>Build</h3><p>Day 2–5. Ad scripts and creatives, landing page built and hosted, application flow, CRM or sheet, Meta account and billing configured.</p></div></div>
+      <div class="step reveal"><span class="step-dot"></span><div class="step-in"><div class="step-n">Step 3</div><h3>Launch</h3><p>Day 7. Campaigns go live on both routes — Meta lead forms and the application funnel — and we tune daily while the winning angle surfaces.</p></div></div>
+      <div class="step reveal"><span class="step-dot"></span><div class="step-in"><div class="step-n">Step 4</div><h3>Handover</h3><p>Day 60. Account, assets and playbook signed over to you, your team trained to run it, then 1–2 months of Slack and Skool support.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="sec soft">
+    <div class="wrap">
+    <div class="sec-head reveal">
+        <h2 class="sec-title">What we actually build and run</h2>
+        <p class="sec-sub">One team, sixty days, four moving parts. No freelancer chasing, no handoff to a junior.</p>
+    </div>
+      <div class="svc">
+      <div class="svc-row reveal">
+        <div class="svc-text">
+          <span class="svc-num">1</span>
+          <h3>Offers</h3>
+          <p>We start with what you sell, not the ad account. Who it's for, what it promises, what it costs, and why a founder picks you over the agency already in their inbox. Everything downstream is built on the offer we settle in week one.</p>
+          <ul class="svc-list">
+            <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.7" opacity=".28"/><path d="M8 12.4l2.6 2.6L16 9.6"/></svg><span>Offer rebuilt from your margins, close rate and delivery capacity</span></li>
+            <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.7" opacity=".28"/><path d="M8 12.4l2.6 2.6L16 9.6"/></svg><span>Positioning that lets you charge more, not less</span></li>
+            <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.7" opacity=".28"/><path d="M8 12.4l2.6 2.6L16 9.6"/></svg><span>Pricing and packaging settled before a rupee is spent</span></li>
+          </ul>
+        </div>
+        <div class="svc-media"><img src="Content/board-offer.png" alt="Offers" loading="lazy"></div>
+      </div>
+      <div class="svc-row reveal flip">
+        <div class="svc-text">
+          <span class="svc-num">2</span>
+          <h3>Systems that make the entire acquisition channel work</h3>
+          <p>The offer only converts if everything around it does. A hosted landing page with a step-by-step application, a revenue gate that turns away founders below your floor, a calendar that only opens to the ones who pass, and every answer waiting on the invite before you take the call.</p>
+          <ul class="svc-list">
+            <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.7" opacity=".28"/><path d="M8 12.4l2.6 2.6L16 9.6"/></svg><span>Landing page built and hosted for you — nothing for you to set up</span></li>
+            <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.7" opacity=".28"/><path d="M8 12.4l2.6 2.6L16 9.6"/></svg><span>Revenue qualification inside the form, before a slot is offered</span></li>
+            <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.7" opacity=".28"/><path d="M8 12.4l2.6 2.6L16 9.6"/></svg><span>Every application into one sheet or CRM, deduplicated and tagged</span></li>
+          </ul>
+        </div>
+        <div class="svc-media"><img src="Content/board-systems.png" alt="Systems that make the entire acquisition channel work" loading="lazy"></div>
+      </div>
+      <div class="svc-row reveal">
+        <div class="svc-text">
+          <span class="svc-num">3</span>
+          <h3>Running the ads</h3>
+          <p>We write the scripts, produce the creatives and run Meta ourselves for 60 days while the numbers stabilise — both routes live from day 7. Then we hand over the account, the assets and the playbook and teach your team to run it.</p>
+          <ul class="svc-list">
+            <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.7" opacity=".28"/><path d="M8 12.4l2.6 2.6L16 9.6"/></svg><span>Ad scripts and static creatives produced in-house, not outsourced</span></li>
+            <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.7" opacity=".28"/><path d="M8 12.4l2.6 2.6L16 9.6"/></svg><span>Weekly numbers: spend, applications, calls booked, cost per booked call</span></li>
+            <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.7" opacity=".28"/><path d="M8 12.4l2.6 2.6L16 9.6"/></svg><span>You keep the ad account, pixel, creatives and data — always</span></li>
+          </ul>
+        </div>
+        <div class="svc-media"><img src="Content/services/ads-manager-calls-booked.png" alt="Running the ads" loading="lazy"></div>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+    <div class="sec-head reveal">
+        <h2 class="sec-title">Additional toolkit that's <span class="ac">yours to keep</span></h2>
+        <p class="sec-sub">The internal systems we built to run Brandslane, handed over at onboarding — not rented back to you.</p>
+    </div>
+      <div class="stack reveal">
+        <div class="stack-panel">
+          <div class="stack-row">
+            <span class="stack-tick"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+            <div><h3>Proposal &amp; agreement generator</h3><p>Fill in the brackets once and send. The same templates we close our own retainers with.</p></div>
+            <div></div>
+          </div>
+          <div class="stack-row">
+            <span class="stack-tick"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+            <div><h3>Static ad design system</h3><p>Your own design system for single-image ads — not a swipe file, a framework your designer can run.</p></div>
+            <div></div>
+          </div>
+          <div class="stack-row">
+            <span class="stack-tick"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+            <div><h3>Sales call analyzer</h3><p>Scores every recorded call against a 9-part rubric and tells your closer exactly what to fix on the next one.</p></div>
+            <div></div>
+          </div>
+          <div class="stack-row">
+            <span class="stack-tick"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+            <div><h3>CRM access</h3><p>Free for the first 30 days, so the leads we generate land somewhere that actually works them.</p></div>
+            <div></div>
+          </div>
+          <div class="stack-row">
+            <span class="stack-tick"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+            <div><h3>Sales call mastery session</h3><p>The full call framework — opening, discovery, gap building, close — recorded and hosted in Skool.</p></div>
+            <div></div>
+          </div>
+          <div class="stack-row">
+            <span class="stack-tick"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+            <div><h3>The Skool community</h3><p>Where the handover support happens: questions answered, campaigns reviewed, other founders in the same build.</p></div>
+            <div></div>
+          </div>
+        </div>
+      <p class="stack-note">Every item above is included in the one-time fee. Nothing here is an upsell.</p>
+      </div>
+    <div class="cta-row reveal"><a href="#apply" class="btn">Scale My Agency <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12 5l7 7-7 7"/></svg></a><span class="cta-note">30-minute call. You'll leave with the acquisition plan whether or not we work together.</span></div>
+    </div>
+  </section>
+
+  <section class="sec soft">
+    <div class="wrap">
+    <div class="sec-head reveal">
+        <h2 class="sec-title">Why founders pick this over the alternatives</h2>
+    </div>
+      <div class="cmp reveal">
+        <table>
+          <thead><tr><th></th><th>Our system</th><th>Other sales programs</th></tr></thead>
+          <tbody>
+          <tr><td>A system by actual agency founders, not course sellers</td><td class="yes">✓</td><td class="no">✕</td></tr>
+          <tr><td>Offer rebuilt before any ad spend</td><td class="yes">✓</td><td class="no">✕</td></tr>
+          <tr><td>You own the account, creatives and data</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Complete ecosystem setup — landing page, automations, CRM</td><td class="yes">✓</td><td class="no">✕</td></tr>
+          <tr><td>Runs without you after handover</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Cost back in 2 months</td><td class="yes">✓</td><td>⚠️</td></tr>
+          <tr><td>Ongoing monthly cost</td><td>Ad spend only</td><td>Ad spend + management fee, forever</td></tr>
+          <tr><td>Someone in your team full-time on it</td><td class="no">✕</td><td class="yes">✓</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec dark">
+    <div class="wrap founder-grid">
+      <div class="reveal">
+        <div class="founder-photo"><img src="Content/founder.jpg" alt="Nik Mishra" loading="lazy"></div>
+        <div class="founder-name"><div class="n">Nik Mishra</div><div class="r">Co-Founder, Brandslane</div></div>
+      </div>
+      <div class="founder-letter reveal">
+          <span class="eyebrow" style="text-align:left">From the founder</span>
+          <h2 class="sec-title" style="text-align:left;margin-bottom:22px">Why an agency owner is selling agency owners an ad system</h2>
+          <p>I've run Brandslane since 2022. Three hundred-plus brands, ₹550 crore in tracked revenue, forty accounts live at any given time. Every one of those clients came through the same machine I'm describing on this page — we don't cold call and we don't wait for referrals.</p>
+          <p>In 2023 I packaged what we'd learned into a programme for agency owners. A hundred and six founders went through it. What I watched happen was the thing nobody says out loud: most agencies aren't bad at the work, they're just invisible. Brilliant delivery, no pipeline. The best operator in the niche losing to the one who shows up in the feed.</p>
+          <p>The programme taught people to build it. This is different — we build it and run it for you, for sixty days, and then you own it. Because most founders don't need another course. They need the machine switched on while they keep delivering.</p>
+          <p>If the numbers don't work for your agency, I'll tell you on the call and you'll still leave with the plan.</p>
+          <div class="founder-sign">Nik Mishra
+Co-Founder, Brandslane</div>
+      </div>
+    </div>
+    <div class="cta-row reveal"><a href="#apply" class="btn">Scale My Agency <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12 5l7 7-7 7"/></svg></a><span class="cta-note">30-minute call. You'll leave with the acquisition plan whether or not we work together.</span></div>
+  </section>
+
+  <section id="testimonials" class="sec">
+    <div class="wrap">
+    <div class="sec-head reveal">
+        <h2 class="sec-title">What founders said <span class="ac">while it was working</span></h2>
+        <p class="sec-sub">From the Agency Scaling Systems community, in their own words.</p>
+    </div>
+      <div class="tst-grid reveal">
+        <figure class="tst"><span class="tst-quote">&ldquo;</span><p>I went from charging ₹20k to ₹60k+ a month with the same client — and started turning down the ones who didn't fit. The boundaries were the real win.</p><figcaption class="who"><div class="n">[Name]</div><div class="r">[Founder, agency]</div></figcaption></figure>
+        <figure class="tst"><span class="tst-quote">&ldquo;</span><p>Six months ago we were doing three or four clients. We're averaging twelve to fifteen now. The pipeline stopped being the thing I worry about.</p><figcaption class="who"><div class="n">[Name]</div><div class="r">[Founder, agency]</div></figcaption></figure>
+        <figure class="tst"><span class="tst-quote">&ldquo;</span><p>Four closes in one month — including a client we'd lost two months earlier coming back for an upsell. It all felt like the after-effects of the bootcamp.</p><figcaption class="who"><div class="n">[Name]</div><div class="r">[Founder, agency]</div></figcaption></figure>
+        <figure class="tst"><span class="tst-quote">&ldquo;</span><p>February was rough. Then nine meetings in a week and three closes. Having a system to run beats hustling harder.</p><figcaption class="who"><div class="n">[Name]</div><div class="r">[Founder, agency]</div></figcaption></figure>
+        <figure class="tst"><span class="tst-quote">&ldquo;</span><p>My first inbound sale, and the biggest deal I'd ever closed. I stopped chasing and started getting found.</p><figcaption class="who"><div class="n">[Name]</div><div class="r">[Founder, agency]</div></figcaption></figure>
+        <figure class="tst"><span class="tst-quote">&ldquo;</span><p>Two closes in a week after months of nothing. It changed how I run the agency, and it took a couple of months, not a year.</p><figcaption class="who"><div class="n">[Name]</div><div class="r">[Founder, agency]</div></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec soft">
+    <div class="wrap">
+    <div class="sec-head reveal">
+        <h2 class="sec-title">Who this is <span class="ac">for</span></h2>
+        <p class="sec-sub">We take a small number of agencies at a time. Here's the honest list.</p>
+    </div>
+      <div class="who-grid">
+      <div class="who-card reveal"><div class="who-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M21 7v5h-5"/></svg></div><h3>Your agency is doing $5K+/month<br>and wants to scale</h3><p>There's a real offer and real delivery behind you. Below that, ads amplify a positioning problem instead of solving one.</p></div>
+      <div class="who-card reveal"><div class="who-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V9l9-6 9 6v12"/><path d="M9 21v-7h6v7"/></svg></div><h3>You are in position to deliver more work</h3><p>Capacity to take on 3–5 more clients a month, or you're ready to hire the moment the calendar fills. This works faster than most founders expect.</p></div>
+      <div class="who-card reveal"><div class="who-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div><h3>You want a channel you own</h3><p>Not a lead list, not a directory, not somebody's referral goodwill. Your ad account, your funnel, your data — still yours after we leave.</p></div>
+      <div class="who-card reveal"><div class="who-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 13l3.5-3.5M9 2h6"/></svg></div><h3>You'll show up to the calls</h3><p>We fill the calendar; you still have to sell. Founders who book calls and don't take them are the only ones this fails for.</p></div>
+      <div class="who-card reveal"><div class="who-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="0.6" fill="currentColor"/></svg></div><h3>You're not selling ecom performance</h3><p>Agencies selling performance marketing to e-commerce brands are our own niche. We don't take them, and we'll say so on the call.</p></div>
+      <div class="who-card reveal"><div class="who-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></div><h3>You want the execution system,<br>not a course</h3><p>We build and run it, then hand it over. If you'd rather learn it yourself over six months, that's a different product.</p></div>
+      </div>
+    <div class="cta-row reveal"><a href="#apply" class="btn">Scale My Agency <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12 5l7 7-7 7"/></svg></a><span class="cta-note">30-minute call. You'll leave with the acquisition plan whether or not we work together.</span></div>
+    </div>
+  </section>
+
+  <section id="apply" class="sec">
+    <div class="wrap">
+    <div class="sec-head apply-head reveal">
+      <span class="eyebrow">Apply for a call</span>
+        <h2 class="sec-title">Let's talk about how your agency's acquisition <span class="ac">should</span> look like</h2>
+        <p class="sec-sub">Five quick questions. If it's a fit you'll pick a time on the next screen — and you'll leave the call with the plan either way.</p>
+    </div>
+      <div class="apply">
+        <div class="form-card">
+        <div class="form-card-head">
+          <h2>Apply for your acquisition plan</h2>
+          <p>Takes under 60 seconds. You'll pick your call slot on the next screen.</p>
+        </div>
+
+        <div id="fq">
+          <div class="fq-progress-row">
+            <span class="fq-progress-label" id="fqLabel">Question 1 of 5</span>
+            <div class="fq-bar"><div class="fq-bar-fill" id="fqFill"></div></div>
+          </div>
+
+          <form id="applyForm" novalidate>
+            <div class="fq-step active" data-q="niche" data-type="multi" data-multi="true" data-hint="Choose as many as you like, then hit Next">
+              <h3 class="fq-title">What is your agency niche?</h3>
+              <p class="fq-sub">Select all that apply.</p>
+              <div class="fq-options">
+                <button type="button" class="fq-option">Performance marketing</button>
+                <button type="button" class="fq-option">Social media, influencer marketing &amp; creatives</button>
+                <button type="button" class="fq-option">Personal branding</button>
+                <button type="button" class="fq-option">Web / app design &amp; development</button>
+                <button type="button" class="fq-option">AI development &amp; automations</button>
+              </div>
+            </div>
+
+            <div class="fq-step" data-q="bottleneck" data-type="single" data-hint="Pick one">
+              <h3 class="fq-title">What is your ONE biggest bottleneck in sales?</h3>
+              <div class="fq-options">
+                <button type="button" class="fq-option">Not enough leads coming in</button>
+                <button type="button" class="fq-option">Lead quality is not good</button>
+                <button type="button" class="fq-option">Leads don't convert</button>
+                <button type="button" class="fq-option">Unable to charge higher</button>
+              </div>
+            </div>
+
+            <div class="fq-step" data-q="revenue" data-type="single" data-hint="Pick one">
+              <h3 class="fq-title">What monthly revenue are you currently stuck at?</h3>
+              <div class="fq-options">
+                <button type="button" class="fq-option">Under ₹5 lakhs</button>
+                <button type="button" class="fq-option">₹5 – 20 lakhs</button>
+                <button type="button" class="fq-option">₹20 lakhs – ₹50 lakhs</button>
+                <button type="button" class="fq-option">₹50 lakhs – ₹1Cr</button>
+                <button type="button" class="fq-option">₹1Cr+</button>
+              </div>
+            </div>
+
+            <div class="fq-step" data-q="offer" data-type="text" data-hint="One line is enough, then hit Next">
+              <h3 class="fq-title">Describe your current offer</h3>
+              <p class="fq-sub">Who do you serve, how do you help them, and what's your price point?</p>
+              <input type="text" id="f-offer" class="fq-textarea" placeholder="">
+            </div>
+
+            <div class="fq-step" data-q="contact" data-type="contact" data-hint="Fill in your details to finish">
+              <h3 class="fq-title">Last step — your details</h3>
+              <div class="form-grid">
+                <div class="field">
+                  <label for="f-name">Full Name</label>
+                  <input type="text" id="f-name" name="name" placeholder="Your full name" autocomplete="name">
+                </div>
+                <div class="field">
+                  <label for="f-email">Email</label>
+                  <input type="email" id="f-email" name="email" placeholder="you@youragency.com" autocomplete="email">
+                </div>
+                <div class="field full">
+                  <label for="f-phone">Phone Number</label>
+                  <input type="tel" id="f-phone" name="phone" placeholder="+91 98765 43210" autocomplete="tel">
+                </div>
+                <button type="submit" class="form-submit" id="fqSubmit">
+                  Reserve Your Call Slot
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+                <p class="form-note">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  Every application is reviewed personally before the call. Your details stay private.
+                </p>
+              </div>
+            </div>
+
+            <p class="fq-error" id="fqError"></p>
+
+            <div class="fq-nav">
+              <button type="button" class="fq-back" id="fqBack" disabled>&larr; Back</button>
+              <div class="fq-nav-right">
+                <span class="fq-hint" id="fqHint"></span>
+                <button type="button" class="fq-next" id="fqNext" disabled>Next &rarr;</button>
+              </div>
+            </div>
+          </form>
+
+          <!-- Inline Calendly appears here after the form is submitted -->
+          <div id="calEmbed"></div>
+
+          <!-- Shown only when no Calendly URL is wired yet (preview state) -->
+          <div class="fq-success" id="fqSuccess">
+            <div class="tick">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <h3>Application received</h3>
+            <p>Preview state &mdash; once the Calendly link is wired, the booking calendar appears here.</p>
+          </div>
+
+          <div class="fq-success" id="fqUnqualified">
+            <div class="tick">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <h3>Application received</h3>
+            <p>Application received. Unfortunately, we qualify only agencies above ₹5 lakhs per month in revenue. We are rooting for you and hope to see you soon and work on your scaling.</p>
+          </div>
+        </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec soft">
+    <div class="wrap">
+    <div class="sec-head reveal">
+        <h2 class="sec-title">Questions founders ask on the first call</h2>
+    </div>
+      <div class="faq">
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">How fast do calls start coming in?<span class="ico"></span></button>
+          <div class="faq-a"><p>Campaigns go live around day 7. Most agencies see applications inside the first three to four weeks. The system — the offer, the qualification, the follow-up — takes the full 60 days to be worth what you paid for it.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">What happens after the 60 days?<span class="ico"></span></button>
+          <div class="faq-a"><p>You own everything: the ad account, the pixel, the creatives, the landing page, the data. We run a handover session, teach your team to run it, and stay reachable on Slack and Skool for a further 1–2 months for questions.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Is there a guarantee?<span class="ico"></span></button>
+          <div class="faq-a"><p>Depends on your closing rate, but yes — we offer ROI back in 60 days or your money back.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">What do you need from me?<span class="ico"></span></button>
+          <div class="faq-a"><p>Ad account and domain access, an hour in the first two days to settle the offer and pricing, someone who takes the calls we book, and the delivery capacity to onboard the clients you close. That's genuinely it.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec dark final">
+    <div class="wrap">
+      <h2 class="reveal">Your best-fit clients are being sold to by an agency with worse work and better distribution. <span class="ac">Fix your distribution.</span></h2>
+      <div class="reveal"><a href="#apply" class="btn">Scale My Agency <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12 5l7 7-7 7"/></svg></a></div>
+
+      <div class="foot">
+        <div class="foot-logo"><img src="Content/logo-white.png" alt="Agency Scaling Systems by Brandslane" loading="lazy"></div>
+      <div class="foot-addr">
+        <div><div class="t">India</div><div class="l">C-25, First Floor, Sector 8<br>Gautam Budh Nagar, Uttar Pradesh 201301</div></div>
+        <div><div class="t">Dubai</div><div class="l">Silicon Oasis Free Zone<br>Dubai, United Arab Emirates</div></div>
+      </div>
+      <p class="foot-links">
+          &copy; 2026 Brandslane Media LLP
+          <span class="sep">&middot;</span><a href="privacy-policy.html">Privacy Policy</a>
+          <span class="sep">&middot;</span><a href="terms-and-conditions.html">Terms &amp; Conditions</a>
+        </p>
+      <p class="foot-disclaimer">This site is not a part of the Facebook website or Meta Platforms, Inc., and is not endorsed by Facebook in any way. FACEBOOK is a trademark of Meta Platforms, Inc. Results shown reflect work done for Brandslane and Agency Scaling Systems clients; individual outcomes vary and depend on your offer, market, capacity and follow-through.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <script>
+    // sticky nav shadow
+    const nav = document.querySelector('.nav');
+    if (nav) {
+      const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    }
+
+    // scroll reveals
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+    // seamless marquee — duplicate the track once so the 50% loop is invisible
+    document.querySelectorAll('.showcase-track').forEach(t => { t.innerHTML += t.innerHTML; });
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-item').forEach(item => {
+      const q = item.querySelector('.faq-q'), a = item.querySelector('.faq-a');
+      q.addEventListener('click', () => {
+        const open = item.classList.toggle('open');
+        a.style.maxHeight = open ? a.scrollHeight + 'px' : 0;
+        q.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    });
+
+    // ===== Step questionnaire =====
+    // Wiring — generated from brief.json (wiring.*). Editing here works too.
+    const CONFIG = {
+      SHEET_ENDPOINT: 'https://script.google.com/macros/s/AKfycbwy9rTwCanpnJLoz8JuarIREwGjR5N3Vy0YfdVmw_olgED-mRgC63iTsQdvExzN7WligQ/exec',
+      CALENDLY_URL: 'https://calendly.com/brandslane/agency-ad-acquisition-call',
+      // Answers that do NOT qualify for a call, keyed by question — must match
+      // the option text exactly. Edit the list to change the threshold.
+      DISQUALIFY: {"revenue": ["Under ₹5 lakhs"]}
+    };
+    // Question order = Calendly a1..aN order = sheet column order.
+    const QUESTIONS = [{"key": "niche", "type": "multi"}, {"key": "bottleneck", "type": "single"}, {"key": "revenue", "type": "single"}, {"key": "offer", "type": "text"}];
+
+    const steps = Array.from(document.querySelectorAll('.fq-step'));
+    const fqLabel = document.getElementById('fqLabel');
+    const fqFill = document.getElementById('fqFill');
+    const fqBack = document.getElementById('fqBack');
+    const fqNext = document.getElementById('fqNext');
+    const fqHint = document.getElementById('fqHint');
+    const fqError = document.getElementById('fqError');
+    const answers = {};
+    QUESTIONS.forEach(q => { answers[q.key] = q.type === 'multi' ? [] : ''; });
+    let cur = 0;
+
+    function textValue(key) {
+      const el = document.getElementById('f-' + key);
+      return el ? el.value.trim() : '';
+    }
+
+    function stepValid(i) {
+      const q = steps[i].dataset.q, type = steps[i].dataset.type;
+      if (type === 'contact') return true;
+      if (type === 'multi') return answers[q].length > 0;
+      if (type === 'text') return textValue(q).length > 0;
+      return !!answers[q];
+    }
+
+    let maxStep = 0;
+    function goTo(i) {
+      if (i > maxStep) {
+        if (window.fbq) fbq('trackCustom', 'StepCompleted', { step_number: maxStep + 1, step: steps[maxStep].dataset.q });
+        maxStep = i;
+      }
+      cur = i;
+      steps.forEach((s, idx) => s.classList.toggle('active', idx === i));
+      fqLabel.textContent = 'Question ' + (i + 1) + ' of ' + steps.length;
+      fqFill.style.width = ((i + 1) / steps.length * 100) + '%';
+      fqBack.disabled = i === 0;
+      fqHint.textContent = steps[i].dataset.hint || '';
+      fqNext.style.display = i === steps.length - 1 ? 'none' : '';
+      fqNext.disabled = !stepValid(i);
+      fqError.classList.remove('show');
+    }
+
+    steps.forEach((step, idx) => {
+      const multi = step.dataset.type === 'multi';
+      step.querySelectorAll('.fq-option').forEach((btn, oi) => {
+        btn.dataset.val = btn.textContent.trim();
+        btn.insertAdjacentHTML('afterbegin', '<span class="key">' + String.fromCharCode(65 + oi) + '</span>');
+        btn.addEventListener('click', () => {
+          const val = btn.dataset.val;
+          if (multi) {
+            const list = answers[step.dataset.q];
+            const at = list.indexOf(val);
+            if (at === -1) list.push(val); else list.splice(at, 1);
+            btn.classList.toggle('selected', at === -1);
+            fqNext.disabled = !stepValid(idx);
+          } else {
+            answers[step.dataset.q] = val;
+            step.querySelectorAll('.fq-option').forEach(b => b.classList.toggle('selected', b === btn));
+            setTimeout(() => goTo(Math.min(idx + 1, steps.length - 1)), 220);
+          }
+        });
+      });
+      if (step.dataset.type === 'text') {
+        document.getElementById('f-' + step.dataset.q).addEventListener('input', () => {
+          if (cur === idx) fqNext.disabled = !stepValid(cur);
+        });
+      }
+    });
+
+    fqNext.addEventListener('click', () => {
+      if (!stepValid(cur)) return;
+      if (steps[cur].dataset.type === 'text') answers[steps[cur].dataset.q] = textValue(steps[cur].dataset.q);
+      goTo(Math.min(cur + 1, steps.length - 1));
+    });
+
+    fqBack.addEventListener('click', () => goTo(Math.max(0, cur - 1)));
+
+    // Enter advances (Typeform behavior); on the contact step it submits natively
+    document.addEventListener('keydown', e => {
+      if (e.key !== 'Enter') return;
+      if (steps[cur].dataset.type === 'contact') return;
+      e.preventDefault(); // stop the browser's implicit form submit mid-questionnaire
+      if (stepValid(cur)) fqNext.click();
+    });
+
+    function hideForm() {
+      document.getElementById('applyForm').style.display = 'none';
+      document.querySelector('.fq-progress-row').style.display = 'none';
+    }
+
+    document.getElementById('applyForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const name = document.getElementById('f-name').value.trim();
+      const email = document.getElementById('f-email').value.trim();
+      const phone = document.getElementById('f-phone').value.trim();
+      if (!name || !email || !phone) {
+        fqError.textContent = 'Please fill in all the fields.';
+        fqError.classList.add('show');
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        fqError.textContent = 'Please enter a valid email address.';
+        fqError.classList.add('show');
+        return;
+      }
+      QUESTIONS.forEach(q => { if (q.type === 'text') answers[q.key] = textValue(q.key); });
+      const payload = { name, email, phone };
+      QUESTIONS.forEach(q => {
+        payload[q.key] = q.type === 'multi' ? answers[q.key].join(', ') : (answers[q.key] || '');
+      });
+      payload.page = location.href;
+      const btn = document.getElementById('fqSubmit');
+      btn.disabled = true;
+      btn.firstChild.textContent = 'Reserving your slot… ';
+      if (CONFIG.SHEET_ENDPOINT) {
+        // keepalive lets the request finish even if the page changes
+        fetch(CONFIG.SHEET_ENDPOINT, {
+          method: 'POST',
+          mode: 'no-cors',
+          keepalive: true,
+          body: new URLSearchParams(payload)
+        }).catch(() => {});
+      }
+      // qualification gate — only qualifying answers see the calendar
+      let qualified = true;
+      Object.keys(CONFIG.DISQUALIFY).forEach(key => {
+        const bad = CONFIG.DISQUALIFY[key];
+        const a = answers[key];
+        if (Array.isArray(a) ? a.some(v => bad.includes(v)) : bad.includes(a || '')) qualified = false;
+      });
+      if (window.fbq) {
+        fbq('track', 'Lead');
+        fbq('trackCustom', qualified ? 'QualifiedLead' : 'UnqualifiedLead');
+      }
+      if (!qualified) {
+        hideForm();
+        document.querySelector('.form-card-head h2').textContent = "Thank you";
+        document.querySelector('.form-card-head p').textContent = "We review every application personally.";
+        document.getElementById('fqUnqualified').classList.add('show');
+        return;
+      }
+      if (CONFIG.CALENDLY_URL) {
+        // Prefill Calendly's name + email from the form (keeps the booking email
+        // identical to the form email). a1..aN prefill the N added Calendly
+        // questions IN ORDER (same order as QUESTIONS); a(N+1) targets Calendly's
+        // own phone field, which sits last after the added questions. Calendly
+        // writes every answer into the Google Calendar event description.
+        let cal = CONFIG.CALENDLY_URL
+          + (CONFIG.CALENDLY_URL.includes('?') ? '&' : '?')
+          + 'name=' + encodeURIComponent(name)
+          + '&email=' + encodeURIComponent(email);
+        QUESTIONS.forEach((q, i) => {
+          cal += '&a' + (i + 1) + '=' + encodeURIComponent(String(payload[q.key]).slice(0, 900));
+        });
+        cal += '&a' + (QUESTIONS.length + 1) + '=' + encodeURIComponent(phone)
+          + '&hide_gdpr_banner=1&embed_type=Inline&embed_domain=' + location.hostname;
+        hideForm();
+        document.querySelector('.form-card-head h2').textContent = "Last step — reserve your call slot";
+        document.querySelector('.form-card-head p').textContent = "Pick a time that works for you. Your details are already filled in.";
+        const embed = document.getElementById('calEmbed');
+        const frame = document.createElement('iframe');
+        frame.src = cal;
+        frame.title = 'Book your call';
+        embed.appendChild(frame);
+        embed.style.display = 'block';
+        document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        hideForm();
+        document.getElementById('fqSuccess').classList.add('show');
+      }
+    });
+
+    // Pixel: fire Schedule when Calendly confirms a booking in the embed
+    window.addEventListener('message', e => {
+      if (typeof e.origin === 'string' && e.origin.indexOf('calendly.com') !== -1
+          && e.data && e.data.event === 'calendly.event_scheduled' && window.fbq) {
+        fbq('track', 'Schedule');
+      }
+    });
+
+    // Initial state. Preview helper: open the page with #step-3 to jump to that step
+    const m = location.hash.match(/^#step-(\d)$/);
+    goTo(m ? Math.min(steps.length, Math.max(1, +m[1])) - 1 : 0);
+
+  </script>
+</body>
+</html>
