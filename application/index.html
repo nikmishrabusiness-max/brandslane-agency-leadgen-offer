@@ -248,7 +248,7 @@
     .field { display: flex; flex-direction: column; gap: 4px; }
     .field.full { grid-column: 1 / -1; }
     .field label { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
-    .field-flag { font-size: 12px; font-weight: 600; color: var(--red); white-space: nowrap; }
+    .field-flag { font-size: 12px; font-weight: 600; color: var(--red); }
     .field input {
       font-family: var(--sans);
       font-size: 20px; color: var(--text);
@@ -491,11 +491,11 @@
                   <input type="text" id="f-name" name="name" placeholder="Your full name" autocomplete="name">
                 </div>
                 <div class="field">
-                  <label for="f-email">Email <span class="field-flag">Not verified = application rejected</span></label>
+                  <label for="f-email">Email <span class="field-flag">(Calls with an incorrect email will be rejected)</span></label>
                   <input type="email" id="f-email" name="email" placeholder="you@youragency.com" autocomplete="email">
                 </div>
                 <div class="field full">
-                  <label for="f-phone">Phone Number <span class="field-flag">Not verified = application rejected</span></label>
+                  <label for="f-phone">Phone Number <span class="field-flag">(Calls with an incorrect phone number will be rejected)</span></label>
                   <input type="tel" id="f-phone" name="phone" placeholder="+91 98765 43210" autocomplete="tel">
                 </div>
                 <button type="submit" class="form-submit" id="fqSubmit">
