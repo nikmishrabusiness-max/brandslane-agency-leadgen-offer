@@ -654,7 +654,8 @@
       const host = u.hostname.toLowerCase();
       if (!/^[a-z0-9.-]+\.[a-z]{2,}$/.test(host)) return '';
       if (kind === 'linkedin') {
-        if (!/(^|\.)linkedin\.com$/.test(host) || u.pathname.replace(/\/+$/, '').length < 4) return '';
+        // Only a real profile or company page: linkedin.com/in/<name> or /company/<name>
+        if (!/(^|\.)linkedin\.com$/.test(host) || !/^\/(in|company)\/[^\/]+/i.test(u.pathname)) return '';
       }
       return u.href;
     }
@@ -676,6 +677,21 @@
       offer: 'One line is enough, then hit Next',
       contact: 'Fill in your details to finish'
     };
+
+    // Gmail usernames only allow letters, numbers and full stops (6–30 characters,
+    // not starting/ending with a full stop, no two in a row). Anything after "+" is an alias.
+    function gmailOk(email) {
+      const at = email.lastIndexOf('@');
+      const domain = email.slice(at + 1).toLowerCase();
+      if (domain !== 'gmail.com' && domain !== 'googlemail.com') return true;
+      const user = email.slice(0, at).split('+')[0];
+      return /^[a-z0-9.]{6,30}$/i.test(user) && !/^\.|\.$|\.\./.test(user);
+    }
+
+    // 10 digits, or +91 followed by 10 digits (spaces, dashes and brackets ignored).
+    function phoneOk(phone) {
+      return /^(\+91)?\d{10}$/.test(phone.replace(/[\s\-()]/g, ''));
+    }
 
     function stepValid(i) {
       const q = steps[i].dataset.q;
@@ -760,6 +776,16 @@
         fqError.classList.add('show');
         return;
       }
+      if (!gmailOk(email)) {
+        fqError.textContent = 'Please check your email — Gmail addresses can only have letters, numbers and full stops.';
+        fqError.classList.add('show');
+        return;
+      }
+      if (!phoneOk(phone)) {
+        fqError.textContent = 'Please enter a 10-digit phone number (with or without +91).';
+        fqError.classList.add('show');
+        return;
+      }
       const links = {};
       for (const l of LINKS) {
         const raw = document.getElementById('f-' + l.key).value.trim();
@@ -771,7 +797,7 @@
         links[l.key] = cleanUrl(raw, l.kind);
         if (!links[l.key]) {
           fqError.textContent = l.kind === 'linkedin'
-            ? 'Please enter your LinkedIn profile link (linkedin.com/in/your-name).'
+            ? 'Please enter your LinkedIn profile link (linkedin.com/in/your-name or linkedin.com/company/your-agency).'
             : 'Please enter a valid website address (e.g. youragency.com).';
           fqError.classList.add('show');
           return;
