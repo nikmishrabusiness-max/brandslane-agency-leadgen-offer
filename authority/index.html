@@ -642,6 +642,10 @@
       font-size: 15px; color: var(--text-tertiary);
       text-align: left; margin: -18px 0 26px;
     }
+    .fq-warning {
+      font-size: 13.5px; font-weight: 600; color: var(--red);
+      text-align: left; margin: -16px 0 24px; line-height: 1.5;
+    }
     .fq-options { display: grid; grid-template-columns: 1fr; gap: 10px; max-width: 520px; }
     .fq-textarea {
       font-family: var(--sans); font-size: 20px; color: var(--text);
@@ -1234,18 +1238,27 @@ Co-Founder, Brandslane</div>
 
             <div class="fq-step" data-q="contact" data-type="contact" data-hint="Fill in your details to finish">
               <h3 class="fq-title">Last step — your details</h3>
+              <p class="fq-warning">DISCLAIMER: Your call will be canceled if the information is incorrect.</p>
               <div class="form-grid">
                 <div class="field">
                   <label for="f-name">Full Name</label>
                   <input type="text" id="f-name" name="name" placeholder="Your full name" autocomplete="name">
                 </div>
                 <div class="field">
-                  <label for="f-email">Email <span class="field-flag">(Calls with an incorrect email will be rejected)</span></label>
+                  <label for="f-email">Email</label>
                   <input type="email" id="f-email" name="email" placeholder="you@youragency.com" autocomplete="email">
                 </div>
                 <div class="field full">
-                  <label for="f-phone">Phone Number <span class="field-flag">(Calls with an incorrect phone number will be rejected)</span></label>
+                  <label for="f-phone">Phone Number</label>
                   <input type="tel" id="f-phone" name="phone" placeholder="+91 98765 43210" autocomplete="tel">
+                </div>
+                <div class="field full">
+                  <label for="f-website">Agency website</label>
+                  <input type="url" id="f-website" name="website" placeholder="youragency.com" autocomplete="url" inputmode="url">
+                </div>
+                <div class="field full">
+                  <label for="f-linkedin">LinkedIn profile</label>
+                  <input type="url" id="f-linkedin" name="linkedin" placeholder="linkedin.com/in/your-name" autocomplete="url" inputmode="url">
                 </div>
                 <button type="submit" class="form-submit" id="fqSubmit">
                   Reserve Your Call Slot
@@ -1382,6 +1395,9 @@ Co-Founder, Brandslane</div>
     };
     // Question order = Calendly a1..aN order = sheet column order.
     const QUESTIONS = [{"key": "niche", "type": "multi"}, {"key": "bottleneck", "type": "single"}, {"key": "revenue", "type": "single"}, {"key": "offer", "type": "text"}];
+    // Optional URL contact fields (agency website, LinkedIn). Prefilled into
+    // Calendly AFTER the phone question: a(N+2), a(N+3).
+    const LINKS = [{"key": "website", "kind": "website"}, {"key": "linkedin", "kind": "linkedin"}];
 
     const steps = Array.from(document.querySelectorAll('.fq-step'));
     const fqLabel = document.getElementById('fqLabel');
@@ -1397,6 +1413,21 @@ Co-Founder, Brandslane</div>
     function textValue(key) {
       const el = document.getElementById('f-' + key);
       return el ? el.value.trim() : '';
+    }
+
+    // "youragency.com" → "https://youragency.com"; '' if it is not a usable URL.
+    function cleanUrl(raw, kind) {
+      let v = (raw || '').trim().replace(/\s+/g, '');
+      if (!v) return '';
+      if (!/^https?:\/\//i.test(v)) v = 'https://' + v;
+      let u;
+      try { u = new URL(v); } catch (e) { return ''; }
+      const host = u.hostname.toLowerCase();
+      if (!/^[a-z0-9.-]+\.[a-z]{2,}$/.test(host)) return '';
+      if (kind === 'linkedin') {
+        if (!/(^|\.)linkedin\.com$/.test(host) || u.pathname.replace(/\/+$/, '').length < 4) return '';
+      }
+      return u.href;
     }
 
     function stepValid(i) {
@@ -1487,8 +1518,26 @@ Co-Founder, Brandslane</div>
         fqError.classList.add('show');
         return;
       }
+      const links = {};
+      for (const l of LINKS) {
+        const raw = textValue(l.key);
+        if (!raw) {
+          fqError.textContent = 'Please fill in all the fields.';
+          fqError.classList.add('show');
+          return;
+        }
+        links[l.key] = cleanUrl(raw, l.kind);
+        if (!links[l.key]) {
+          fqError.textContent = l.kind === 'linkedin'
+            ? 'Please enter your LinkedIn profile link (linkedin.com/in/your-name).'
+            : 'Please enter a valid website address (e.g. youragency.com).';
+          fqError.classList.add('show');
+          return;
+        }
+      }
       QUESTIONS.forEach(q => { if (q.type === 'text') answers[q.key] = textValue(q.key); });
       const payload = { name, email, phone };
+      LINKS.forEach(l => { payload[l.key] = links[l.key]; });
       QUESTIONS.forEach(q => {
         payload[q.key] = q.type === 'multi' ? answers[q.key].join(', ') : (answers[q.key] || '');
       });
@@ -1536,8 +1585,11 @@ Co-Founder, Brandslane</div>
         QUESTIONS.forEach((q, i) => {
           cal += '&a' + (i + 1) + '=' + encodeURIComponent(String(payload[q.key]).slice(0, 900));
         });
-        cal += '&a' + (QUESTIONS.length + 1) + '=' + encodeURIComponent(phone)
-          + '&hide_gdpr_banner=1&embed_type=Inline&embed_domain=' + location.hostname;
+        cal += '&a' + (QUESTIONS.length + 1) + '=' + encodeURIComponent(phone);
+        LINKS.forEach((l, i) => {
+          cal += '&a' + (QUESTIONS.length + 2 + i) + '=' + encodeURIComponent(payload[l.key]);
+        });
+        cal += '&hide_gdpr_banner=1&embed_type=Inline&embed_domain=' + location.hostname;
         hideForm();
         document.querySelector('.form-card-head h2').textContent = "Last step — reserve your call slot";
         document.querySelector('.form-card-head p').textContent = "Pick a time that works for you. Your details are already filled in.";

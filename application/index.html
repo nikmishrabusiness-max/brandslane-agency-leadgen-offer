@@ -157,6 +157,10 @@
       font-size: 15px; color: var(--text-tertiary);
       text-align: left; margin: -18px 0 26px;
     }
+    .fq-warning {
+      font-size: 13.5px; font-weight: 600; color: var(--red);
+      text-align: left; margin: -16px 0 24px; line-height: 1.5;
+    }
     .fq-options { display: grid; grid-template-columns: 1fr; gap: 10px; max-width: 520px; }
     .fq-textarea {
       font-family: var(--sans); font-size: 20px; color: var(--text);
@@ -485,18 +489,27 @@
 
             <div class="fq-step" data-q="contact">
               <h3 class="fq-title">Last step &mdash; your details</h3>
+              <p class="fq-warning">DISCLAIMER: Your call will be canceled if the information is incorrect.</p>
               <div class="form-grid">
                 <div class="field">
                   <label for="f-name">Full Name</label>
                   <input type="text" id="f-name" name="name" placeholder="Your full name" autocomplete="name">
                 </div>
                 <div class="field">
-                  <label for="f-email">Email <span class="field-flag">(Calls with an incorrect email will be rejected)</span></label>
+                  <label for="f-email">Email</label>
                   <input type="email" id="f-email" name="email" placeholder="you@youragency.com" autocomplete="email">
                 </div>
                 <div class="field full">
-                  <label for="f-phone">Phone Number <span class="field-flag">(Calls with an incorrect phone number will be rejected)</span></label>
+                  <label for="f-phone">Phone Number</label>
                   <input type="tel" id="f-phone" name="phone" placeholder="+91 98765 43210" autocomplete="tel">
+                </div>
+                <div class="field full">
+                  <label for="f-website">Agency website</label>
+                  <input type="url" id="f-website" name="website" placeholder="youragency.com" autocomplete="url" inputmode="url">
+                </div>
+                <div class="field full">
+                  <label for="f-linkedin">LinkedIn profile</label>
+                  <input type="url" id="f-linkedin" name="linkedin" placeholder="linkedin.com/in/your-name" autocomplete="url" inputmode="url">
                 </div>
                 <button type="submit" class="form-submit" id="fqSubmit">
                   Reserve Your Call Slot
@@ -627,6 +640,24 @@
       // change the threshold (must match the option text exactly)
       DISQUALIFIED_REVENUE: ['Under ₹5 lakhs']
     };
+    // URL contact fields (agency website, LinkedIn). Prefilled into Calendly
+    // AFTER the phone question: a6, a7.
+    const LINKS = [{ key: 'website', kind: 'website' }, { key: 'linkedin', kind: 'linkedin' }];
+
+    // "youragency.com" → "https://youragency.com"; '' if it is not a usable URL.
+    function cleanUrl(raw, kind) {
+      let v = (raw || '').trim().replace(/\s+/g, '');
+      if (!v) return '';
+      if (!/^https?:\/\//i.test(v)) v = 'https://' + v;
+      let u;
+      try { u = new URL(v); } catch (e) { return ''; }
+      const host = u.hostname.toLowerCase();
+      if (!/^[a-z0-9.-]+\.[a-z]{2,}$/.test(host)) return '';
+      if (kind === 'linkedin') {
+        if (!/(^|\.)linkedin\.com$/.test(host) || u.pathname.replace(/\/+$/, '').length < 4) return '';
+      }
+      return u.href;
+    }
 
     const steps = Array.from(document.querySelectorAll('.fq-step'));
     const fqLabel = document.getElementById('fqLabel');
@@ -729,9 +760,28 @@
         fqError.classList.add('show');
         return;
       }
+      const links = {};
+      for (const l of LINKS) {
+        const raw = document.getElementById('f-' + l.key).value.trim();
+        if (!raw) {
+          fqError.textContent = 'Please fill in all the fields.';
+          fqError.classList.add('show');
+          return;
+        }
+        links[l.key] = cleanUrl(raw, l.kind);
+        if (!links[l.key]) {
+          fqError.textContent = l.kind === 'linkedin'
+            ? 'Please enter your LinkedIn profile link (linkedin.com/in/your-name).'
+            : 'Please enter a valid website address (e.g. youragency.com).';
+          fqError.classList.add('show');
+          return;
+        }
+      }
       answers.offer = document.getElementById('f-offer').value.trim();
       const payload = {
         name, email, phone,
+        website: links.website,
+        linkedin: links.linkedin,
         niche: answers.niche.join(', '),
         bottleneck: answers.bottleneck || '',
         revenue: answers.revenue || '',
@@ -769,8 +819,9 @@
         // email identical to the form email, so downstream lookups match
         // a1–a4 prefill the four added Calendly questions IN ORDER
         // (niche, bottleneck, revenue, offer); a5 targets Calendly's own
-        // phone field, which sits last after the added questions. Calendly
-        // writes all answers into the Google Calendar event description.
+        // phone field; a6/a7 = the website + LinkedIn questions added after
+        // Phone (2026-10-07). Calendly writes all answers into the Google
+        // Calendar event description.
         const cal = CONFIG.CALENDLY_URL
           + (CONFIG.CALENDLY_URL.includes('?') ? '&' : '?')
           + 'name=' + encodeURIComponent(name)
@@ -780,6 +831,8 @@
           + '&a3=' + encodeURIComponent(payload.revenue)
           + '&a4=' + encodeURIComponent((payload.offer || '').slice(0, 900))
           + '&a5=' + encodeURIComponent(payload.phone)
+          + '&a6=' + encodeURIComponent(payload.website)
+          + '&a7=' + encodeURIComponent(payload.linkedin)
           + '&hide_gdpr_banner=1&embed_type=Inline&embed_domain=' + location.hostname;
         document.getElementById('applyForm').style.display = 'none';
         document.querySelector('.fq-progress-row').style.display = 'none';
